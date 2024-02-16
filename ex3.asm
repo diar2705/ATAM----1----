@@ -16,7 +16,10 @@ forloop_HW1:
     jge sucsess_HW1
 
     movq source_array(, %esl, 8), %eax
+
     inc %esl
+    cmp %esl, (size)
+    jge inc_HW1
     movq source_array(, %esl, 8), %ebx
 
     cmp %edx, %eax
