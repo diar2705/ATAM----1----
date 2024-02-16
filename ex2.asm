@@ -2,33 +2,113 @@
 
     .section.text
 _start:
-    #your code here
-    xor %edx, %edx
 
-forloop_HW1:
-    cmp %edx, $9
-    jge end_forloop_HW1
-    movq vertices(, %edx, 8), %rax
-    movl %ecx $1
+    movq vertices, %rax
+    movb $-1, circle
 
-whileloop_HW1:
-    movq 0(%rax, %ecx, 8), %rbx
-    cmp %rbx, $0
-    je  end_whileloop_HW1
-    cmp %rbx, %rax
-    je  set_circle_HW1
-    cmp %ecx, $9
-    jge set_circle_HW1
-    inc %ecx
-    jmp whileloop_HW1
+All_Vertices_HW1:
+    cmp $0, %rax
+    je end_HW1
+    movq (%rax), %rbx
+    cmp $0, %rbx
+    je end_HW1
 
-end_whileloop_HW1:
-    inc %edx
-    jmp forloop_HW1
+Next_Vertex:
+    add $4, %rax
+    jmp All_Vertices_HW1
 
-end_forloop_HW1:
-    movb $-1, (circle)
-    ret
+Depth_0_Son_HW1:
+    movq (%rbx), %r8x
+
+    cmp $0, %r8x
+    jmp Next_Vertex
+
+    cmp %r8x, %rax
+    je set_circle_HW1
+
+    jmp Depth_1_Son_HW1
+
+Depth_1_Son_HW1:
+    movq (%r8x), %r9x
+
+    cmp $0, %r9x
+    jmp Next_Vertex
+
+    cmp %r9x, %rax
+    je set_circle_HW1
+
+    jmp Depth_2_Son_HW1
+
+Depth_2_Son_HW1:
+    movq (%r9x), %r10x
+
+    cmp $0, %r10x
+    jmp Next_Vertex
+
+    cmp %r10x, %rax
+    je set_circle_HW1
+
+    jmp Depth_3_Son_HW1
+
+Depth_3_Son_HW1:
+    movq (%r10x), %r11x
+
+    cmp $0, %r11x
+    jmp Next_Vertex
+
+    cmp %r11x, %rax
+    je set_circle_HW1
+
+    jmp Depth_4_Son_HW1
+
+Depth_4_Son_HW1:
+    movq (%r11x), %r12x
+
+    cmp $0, %r12x
+    jmp Next_Vertex
+
+    cmp %r12x, %rax
+    je set_circle_HW1
+
+    jmp Depth_5_Son_HW1
+
+Depth_5_Son_HW1:
+    movq (%r12x), %r13x
+
+    cmp $0, %r13x
+    jmp Next_Vertex
+
+    cmp %r13x, %rax
+    je set_circle_HW1
+
+    jmp Depth_6_Son_HW1
+
+Depth_6_Son_HW1:
+    movq (%r13x), %r14x
+
+    cmp $0, %r14x
+    jmp Next_Vertex
+
+    cmp %r14x, %rax
+    je set_circle_HW1
+
+    jmp Depth_7_Son_HW1
+    
+Depth_7_Son_HW1:
+    movq (%r14x), %r15x
+
+    cmp $0, %r15x
+    jmp Next_Vertex
+
+    cmp %r8x, %rax
+    je set_circle_HW1
+
+    jmp set_circle_HW1
+    
+
 set_circle_HW1:
-    movb $1, (circle)
+    movb $1, circle
+    ret
+
+end_HW1:
     ret
