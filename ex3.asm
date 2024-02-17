@@ -50,7 +50,7 @@ find_Max_HW1:
     jmp find_Max_HW1
 
 setBigger_HW1:
-    cmpl %r9d, %r13d
+    movl %r13d, %r9d
     add $4, %rsi
     inc %r12d
     jmp find_Max_HW1
@@ -117,6 +117,4 @@ sucess_HW1:
 
 
 end_HW1:
-
-
 
