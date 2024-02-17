@@ -15,6 +15,7 @@ _start:
     movl (%rax), %r9d                       # max value
     xor %r12d, %r12d
 
+    movb $0, (bool)
 
 find_Min_HW1:
     cmpl %r11d, %edx
@@ -89,7 +90,7 @@ continue_loop_HW1:
 
 insert_down_HW1:
     cmpl %r9d, %r13d 
-    jle fail_HW1
+    jle end_HW1
 
     movl %r13d, (%rbx)
     movl %r13d, %r9d
@@ -100,7 +101,7 @@ insert_down_HW1:
 
 insert_up_HW1:
     cmpl %r8d, %r13d
-    jge fail_HW1
+    jge end_HW1
 
     movl %r13d, (%rcx)
     movl %r13d, %r8d
@@ -108,10 +109,6 @@ insert_up_HW1:
     inc %r10d
     add $4, %r14
     jmp forloop_HW1
-
-fail_HW1:
-    movb $0, (bool)
-    jmp end_HW1
 
 
 sucess_HW1:
