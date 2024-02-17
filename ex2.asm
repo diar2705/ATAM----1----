@@ -2,147 +2,117 @@
 
 .section .text
 _start:
+#your code here
 
-    movq $vertices, %rax
-    movb $-1, (circle)
+    movq $source_array, %rax
+    movq $down_array, %rbx
+    movq $up_array, %rcx
+    movl size, %edx
 
-All_Vertices_HW1:
-    movq (%rax), %rbx
+    movl (%rax), %r8d                       # min value
 
-    cmpq $0, %rbx
-    je end_HW1
+    movl (%rax), %r9d                       # max value
 
-    jmp Depth_0_Son_HW1 
+find_Min_HW1:
+    cmpl %r11d, %edx
+    jge find_Max_HW1
 
+    movl (%rax), %r13d
+    cmpl %r13d, %r8d
+    jl setLess_HW1
 
-Depth_0_Son_HW1:
-    movq (%rbx), %r8
+    add $4, %rax
+    jmp find_Min_HW1
 
-    cmpq $0, %r8
-    je Next_Neighbor_0_HW1
+setLess_HW1:
+    movl %r13d, %r8d
+    add $4, %rax
+    jmp find_Min_HW1
 
-    cmp (%rax), %r8
-    je set_circle_HW1
+find_Max_HW1:
+    cmpl %r12d, %edx
+    jge continue_HW1
 
-    jmp Depth_1_Son_HW1
+    movl (%rax), %r13d
+    cmpl %r13d, %r9d
+    jg setBigger_HW1
 
-Next_Neighbor_0_HW1:
-    addq $8, %rax
-    jmp All_Vertices_HW1
+    add $4, %rax
+    jmp find_Max_HW1
 
-
-Depth_1_Son_HW1:
-    movq (%r8), %r9
-
-    cmpq $0, %r9
-    je Next_Neighbor_1_HW1
-
-    cmpq (%rax), %r9
-    je set_circle_HW1
-
-    jmp Depth_2_Son_HW1
-
-Next_Neighbor_1_HW1:
-    addq $8, %rbx
-    jmp Depth_0_Son_HW1
-
-
-Depth_2_Son_HW1:
-    movq (%r9), %r10
-
-    cmpq $0, %r10
-    je Next_Neighbor_2_HW1
-
-    cmpq (%rax), %r10
-    je set_circle_HW1
-
-    jmp Depth_3_Son_HW1
-
-Next_Neighbor_2_HW1:
-    addq $8, %r8
-    jmp Depth_1_Son_HW1
+setBigger_HW1:
+    cmpl %r13d, %r9d
+    add $4, %rax
+    jmp find_Max_HW1
 
 
-Depth_3_Son_HW1:
-    movq (%r10), %r11
+continue_HW1:
+    dec %r8d
+    inc %r9d
 
-    cmpq $0, %r11
-    je Next_Neighbor_3_HW1
+    movq $source_array, %rax
+    xor %r10d, %r10d                         # index
 
-    cmpq (%rax), %r11
-    je set_circle_HW1
+forloop_HW1:
+    cmpl %r10d, %edx
+    jge sucess_HW1
 
-    jmp Depth_4_Son_HW1
+    movl (%rax), %r13d
+    cmpl %r8d ,%r13d
+    jge insert_down_HW1
 
-Next_Neighbor_3_HW1:
-    addq $8, %r9
-    jmp Depth_2_Son_HW1
+    cmpl %r9d, %r13d
+    jle insert_up_HW1
 
+    inc %r10d
+    cmpl %r10d, %edx
+    jge continue_loop_HW1
 
-Depth_4_Son_HW1:
-    movq (%r11), %r12
-
-    cmpq $0, %r12
-    je Next_Neighbor_4_HW1
-
-    cmpq (%rax), %r12
-    je set_circle_HW1
-
-    jmp Depth_5_Son_HW1
-
-Next_Neighbor_4_HW1:
-    addq $8, %r10
-    jmp Depth_3_Son_HW1
+    movl 4(%rax), %r15d
+    dec %r10d
+    cmpl %r13d, %r15d
+    jge insert_down_HW1
+    jmp insert_up_HW1
 
 
-Depth_5_Son_HW1:
-    movq (%r12), %r13
+continue_loop_HW1:
+    movl %r13d, (%rcx)
+    add $4, %rcx
+    jmp forloop_HW1
 
-    cmpq $0, %r13
-    je Next_Neighbor_5_HW1
+insert_down_HW1:
+    cmpl %r9d, %r13d 
+    jle fail_HW1
 
-    cmpq (%rax), %r13
-    je set_circle_HW1
+    movl %r13d, (%rbx)
+    movl %r13d, %r9d
+    add $4, %rbx
+    inc %r10d
+    add $4, %rax
+    jmp forloop_HW1
 
-    jmp Depth_6_Son_HW1
+insert_up_HW1:
+    cmpl %r8d, %r13d
+    jge fail_HW1
 
-Next_Neighbor_5_HW1:
-    addq $8, %r11
-    jmp Depth_4_Son_HW1
+    movl %r13d, (%rcx)
+    movl %r13d, %r8d
+    add $4, %rcx
+    inc %r10d
+    add $4, %rax
+    jmp forloop_HW1
 
-Depth_6_Son_HW1:
-    movq (%r13), %r14
-
-    cmpq $0, %r14
-    je Next_Neighbor_6_HW1
-
-    cmpq (%rax), %r14
-    je set_circle_HW1
-
-    jmp Depth_7_Son_HW1
-
-Next_Neighbor_6_HW1:
-    addq $8, %r12
-    jmp Depth_5_Son_HW1
-
-Depth_7_Son_HW1:
-    movq (%r14), %r15
-    
-    cmpq $0, %r15
-    je Next_Neighbor_7_HW1
-
-    cmpq (%rax), %r15
-    je set_circle_HW1
-
-    jmp set_circle_HW1
-
-Next_Neighbor_7_HW1:
-    addq $8, %r13
-    jmp Depth_6_Son_HW1
-
-set_circle_HW1:
-    movb $1, (circle)
+fail_HW1:
+    movb $0, (bool)
     jmp end_HW1
 
+
+sucess_HW1:
+    movb $1, (bool)
+    jmp end_HW1
+
+
 end_HW1:
+
+
 
