@@ -8,6 +8,7 @@ _start:
 
 All_Vertices_HW1:
     movq (%rax), %rbx
+
     cmpq $0, %rbx
     je end_HW1
 
@@ -16,6 +17,7 @@ All_Vertices_HW1:
 
 Depth_0_Son_HW1:
     movq (%rbx), %r8
+
     cmpq $0, %r8
     je Next_Neighbor_0_HW1
 
@@ -31,6 +33,7 @@ Next_Neighbor_0_HW1:
 
 Depth_1_Son_HW1:
     movq (%r8), %r9
+
     cmpq $0, %r9
     je Next_Neighbor_1_HW1
 
@@ -46,6 +49,7 @@ Next_Neighbor_1_HW1:
 
 Depth_2_Son_HW1:
     movq (%r9), %r10
+
     cmpq $0, %r10
     je Next_Neighbor_2_HW1
 
@@ -61,6 +65,7 @@ Next_Neighbor_2_HW1:
 
 Depth_3_Son_HW1:
     movq (%r10), %r11
+
     cmpq $0, %r11
     je Next_Neighbor_3_HW1
 
@@ -76,6 +81,7 @@ Next_Neighbor_3_HW1:
 
 Depth_4_Son_HW1:
     movq (%r11), %r12
+
     cmpq $0, %r12
     je Next_Neighbor_4_HW1
 
@@ -91,6 +97,7 @@ Next_Neighbor_4_HW1:
 
 Depth_5_Son_HW1:
     movq (%r12), %r13
+
     cmpq $0, %r13
     je Next_Neighbor_5_HW1
 
@@ -105,6 +112,7 @@ Next_Neighbor_5_HW1:
 
 Depth_6_Son_HW1:
     movq (%r13), %r14
+
     cmpq $0, %r14
     je Next_Neighbor_6_HW1
 
@@ -119,6 +127,7 @@ Next_Neighbor_6_HW1:
 
 Depth_7_Son_HW1:
     movq (%r14), %r15
+    
     cmpq $0, %r15
     je Next_Neighbor_7_HW1
 
