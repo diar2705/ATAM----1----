@@ -5,6 +5,8 @@ _start:
 #your code here
 
     movq $source_array, %rax
+    movq $source_array, %r14
+    movq $source_array, %rsi
     movq $down_array, %rbx
     movq $up_array, %rcx
     movl size, %edx
@@ -39,17 +41,17 @@ find_Max_HW1:
     cmpl %r12d, %edx
     jge continue_HW1
 
-    movl (%rax), %r13d
+    movl (%rsi), %r13d
     cmpl %r13d, %r9d
     jg setBigger_HW1
 
-    add $4, %rax
+    add $4, %rsi
     inc %r12d
     jmp find_Max_HW1
 
 setBigger_HW1:
     cmpl %r13d, %r9d
-    add $4, %rax
+    add $4, %rsi
     inc %r12d
     jmp find_Max_HW1
 
@@ -57,8 +59,6 @@ setBigger_HW1:
 continue_HW1:
     dec %r8d
     inc %r9d
-
-    movq $source_array, %r14
     xor %r10d, %r10d                         # index
 
 forloop_HW1:
