@@ -58,10 +58,10 @@ forloop_HW1:
     jge sucess_HW1
 
     movl (%rax), %r13d
-    cmp %r8d, %r13d
+    cmp %r13d, %r8d
     jge insert_down_HW1
 
-    cmp %r13d, %r9d
+    cmp %r9d, %r13d
     jge insert_up_HW1
 
     inc %r10d
@@ -81,7 +81,7 @@ continue_loop_HW1:
     jmp forloop_HW1
 
 insert_down_HW1:
-    cmp %r13d, %r9d 
+    cmp %r9d, %r13d 
     jge fail_HW1
 
     movl %r13d, (%rbx)
@@ -91,7 +91,7 @@ insert_down_HW1:
     jmp forloop_HW1
 
 insert_up_HW1:
-    cmp %r8d, %r13d
+    cmp %r13d, %r8d
     jge fail_HW1
 
     movl %r13d, (%rcx)
