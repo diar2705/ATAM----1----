@@ -10,8 +10,11 @@ _start:
     movl size, %edx
 
     movl (%rax), %r8d                       # min value
+    xor %r11d, %r11d
 
     movl (%rax), %r9d                       # max value
+    xor %r12d, %r12d
+
 
 find_Min_HW1:
     cmpl %r11d, %edx
@@ -22,11 +25,13 @@ find_Min_HW1:
     jl setLess_HW1
 
     add $4, %rax
+    inc %r11d
     jmp find_Min_HW1
 
 setLess_HW1:
     movl %r13d, %r8d
     add $4, %rax
+    inc %r11d
     jmp find_Min_HW1
 
 find_Max_HW1:
@@ -38,11 +43,13 @@ find_Max_HW1:
     jg setBigger_HW1
 
     add $4, %rax
+    inc %r12d
     jmp find_Max_HW1
 
 setBigger_HW1:
     cmpl %r13d, %r9d
     add $4, %rax
+    inc %r12d
     jmp find_Max_HW1
 
 
@@ -50,14 +57,14 @@ continue_HW1:
     dec %r8d
     inc %r9d
 
-    movq $source_array, %rax
+    movq $source_array, %r14
     xor %r10d, %r10d                         # index
 
 forloop_HW1:
     cmpl %r10d, %edx
     jge sucess_HW1
 
-    movl (%rax), %r13d
+    movl (%r14), %r13d
     cmpl %r8d ,%r13d
     jge insert_down_HW1
 
@@ -68,7 +75,7 @@ forloop_HW1:
     cmpl %r10d, %edx
     jge continue_loop_HW1
 
-    movl 4(%rax), %r15d
+    movl 4(%r14), %r15d
     dec %r10d
     cmpl %r13d, %r15d
     jge insert_down_HW1
@@ -88,7 +95,7 @@ insert_down_HW1:
     movl %r13d, %r9d
     add $4, %rbx
     inc %r10d
-    add $4, %rax
+    add $4, %r14
     jmp forloop_HW1
 
 insert_up_HW1:
@@ -99,7 +106,7 @@ insert_up_HW1:
     movl %r13d, %r8d
     add $4, %rcx
     inc %r10d
-    add $4, %rax
+    add $4, %r14
     jmp forloop_HW1
 
 fail_HW1:
